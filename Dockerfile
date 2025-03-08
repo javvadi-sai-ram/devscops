@@ -2,7 +2,7 @@
 FROM node:20-alpine3.18 AS build
 WORKDIR /app
 COPY package*.json ./
-RUN apk update && apk upgrade 
+RUN apk update && apk upgrade curl libcurl libexpat libxml2
 RUN npm ci
 COPY . .
 RUN npm run build
