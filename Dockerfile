@@ -1,13 +1,14 @@
 # Build stage
-FROM node:20-alpine AS build
+FROM node:20-alpine3.18 AS build
 WORKDIR /app
 COPY package*.json ./
+RUN apk update && apk upgrade 
 RUN npm ci
 COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM nginx:alpine3.18
 COPY --from=build /app/dist /usr/share/nginx/html
 # Add nginx configuration if needed
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
